@@ -6,12 +6,11 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 import space.kscience.frameswork.features.common.common.utils.toInt
 import space.kscience.frameswork.features.frames.common.models.ByteArrayFrameData
 import space.kscience.frameswork.features.frames.common.models.FrameData
-import space.kscience.frameswork.features.frames.common.models.FrameSourceHeight
-import space.kscience.frameswork.features.frames.common.models.FrameSourceWidth
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceHeight
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceWidth
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -24,8 +23,8 @@ class ByteArrayFrameMetaToByteArrayTests {
         allowStructuredMapKeys = true
         serializersModule = SerializersModule {
             polymorphic(Any::class, Int::class, Int.serializer())
-            polymorphic(MetaContainer.Key::class, FrameSourceWidth::class, FrameSourceWidth.serializer())
-            polymorphic(MetaContainer.Key::class, FrameSourceHeight::class, FrameSourceHeight.serializer())
+            polymorphic(MetaContainer.Key::class, SourceFrameSourceWidth::class, SourceFrameSourceWidth.serializer())
+            polymorphic(MetaContainer.Key::class, SourceFrameSourceHeight::class, SourceFrameSourceHeight.serializer())
         }
     }
 
@@ -34,8 +33,8 @@ class ByteArrayFrameMetaToByteArrayTests {
     fun encodeUsesDocumentedLayoutAndConvertsPayloadOnce() = runTest {
         val payload = byteArrayOf(0, -1, 2, 127, -128)
         val meta = buildMetaContainer {
-            put(FrameSourceWidth, 1920)
-            put(FrameSourceHeight, 1080)
+            put(SourceFrameSourceWidth, 1920)
+            put(SourceFrameSourceHeight, 1080)
         }
         val frame = CountingFrameData(payload, meta)
         val expectedMetaBytes = json
@@ -68,8 +67,8 @@ class ByteArrayFrameMetaToByteArrayTests {
     fun encodedFrameRoundTripsMetaAndBinaryPayload() = runTest {
         val payload = byteArrayOf(12, 0, -45, 99)
         val meta = buildMetaContainer {
-            put(FrameSourceWidth, 800)
-            put(FrameSourceHeight, 600)
+            put(SourceFrameSourceWidth, 800)
+            put(SourceFrameSourceHeight, 600)
         }
 
         val decoded = ByteArrayFrameData(payload, meta)

@@ -10,6 +10,14 @@ data object FramesSourceIdMeta : MetaContainer.Key<FramesSourceId>
 
 /** Metadata key containing the frame width in pixels. */
 @Serializable
+data object SourceFrameSourceWidth : MetaContainer.Key<Int>
+
+/** Metadata key containing the frame height in pixels. */
+@Serializable
+data object SourceFrameSourceHeight : MetaContainer.Key<Int>
+
+/** Metadata key containing the frame width in pixels. */
+@Serializable
 data object FrameSourceWidth : MetaContainer.Key<Int>
 
 /** Metadata key containing the frame height in pixels. */

@@ -69,6 +69,8 @@ class FFMPEGRTSPFrameSourceConnector(
                                 buildMetaContainer {
                                     put(FramesSourceIdMeta, id)
 //                                    put(FrameSourceMat, toMatConverter.convert(frame))
+                                    put(SourceFrameSourceWidth, frame.imageWidth)
+                                    put(SourceFrameSourceHeight, frame.imageHeight)
                                     put(FrameSourceWidth, frame.imageWidth)
                                     put(FrameSourceHeight, frame.imageHeight)
                                     put(FrameSourceTimestampMicroseconds, frame.timestamp)

@@ -2,8 +2,8 @@ package space.kscience.frameswork.features.frames.common.models.javacv
 
 import dev.inmo.micro_utils.meta.buildMetaContainer
 import kotlinx.coroutines.test.runTest
-import space.kscience.frameswork.features.frames.common.models.FrameSourceHeight
-import space.kscience.frameswork.features.frames.common.models.FrameSourceWidth
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceHeight
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceWidth
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -48,21 +48,21 @@ class BufferedImageFrameDataTests {
         val original = BufferedImageFrameData(image, dimensions(2, 2))
 
         val copy = original.copyWithModifiedMeta {
-            put(FrameSourceWidth, 8)
-            put(FrameSourceHeight, 6)
+            put(SourceFrameSourceWidth, 8)
+            put(SourceFrameSourceHeight, 6)
         } as BufferedImageFrameData
 
         assertNotSame(original, copy)
         assertSame(image, copy.bufferedImage)
-        assertEquals(2, original.meta[FrameSourceWidth])
-        assertEquals(2, original.meta[FrameSourceHeight])
-        assertEquals(8, copy.meta[FrameSourceWidth])
-        assertEquals(6, copy.meta[FrameSourceHeight])
+        assertEquals(2, original.meta[SourceFrameSourceWidth])
+        assertEquals(2, original.meta[SourceFrameSourceHeight])
+        assertEquals(8, copy.meta[SourceFrameSourceWidth])
+        assertEquals(6, copy.meta[SourceFrameSourceHeight])
     }
 
     /** Builds the dimension metadata used by test frames. */
     private fun dimensions(width: Int, height: Int) = buildMetaContainer {
-        put(FrameSourceWidth, width)
-        put(FrameSourceHeight, height)
+        put(SourceFrameSourceWidth, width)
+        put(SourceFrameSourceHeight, height)
     }
 }

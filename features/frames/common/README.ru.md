@@ -31,7 +31,7 @@ commonMain.dependencies {
   один выбранный вышестоящий источник между подписчиками и переключается при смене источника.
 - [`FramesSourceId`](src/commonMain/kotlin/models/FramesSourceId.kt) — сериализуемый идентификатор
   источника.
-- [`FramesSourceIdMeta`, `FrameSourceWidth`, `FrameSourceHeight`, `FrameReceiveTimestamp` и
+- [`FramesSourceIdMeta`, `SourceFrameSourceWidth`, `SourceFrameSourceHeight`, `FrameReceiveTimestamp` и
   `FrameSourceTimestampMicroseconds`](src/commonMain/kotlin/models/FrameMeta.kt) — сериализуемые ключи
   метаданных для идентификатора источника, размеров, времени получения и метки времени источника.
 - [`FrameSourceConnectorConfig`](src/commonMain/kotlin/models/FrameSourceConnectorConfig.kt) воссоздаёт

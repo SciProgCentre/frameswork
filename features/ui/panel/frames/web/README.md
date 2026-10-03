@@ -92,7 +92,7 @@ val frames: FramesDataInfoFeature = CacheFramesDataInfoFeature(
   complete `CameraViewConfig` to the panel editor.
 - [`CameraView`](src/jsMain/kotlin/ui/camera/CameraView.kt) base64-encodes each payload as a JPEG data
   URL. Its dashboard overlay shows the selected stream, live/offline state, measured frame rate,
-  and dimensions when `FrameSourceWidth` and `FrameSourceHeight` metadata are present. The last
+  and dimensions when `SourceFrameSourceWidth` and `SourceFrameSourceHeight` metadata are present. The last
   image remains visible when the stream becomes offline.
 - [`CommonPanelStrings`](src/commonMain/kotlin/CommonPanelStrings.kt) and
   [`CameraStrings`](src/jsMain/kotlin/CameraStrings.kt) contain English/Russian string resources.
