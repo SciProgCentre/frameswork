@@ -93,7 +93,7 @@ val frames: FramesDataInfoFeature = CacheFramesDataInfoFeature(
   завершённый `CameraViewConfig` редактору панели.
 - [`CameraView`](src/jsMain/kotlin/ui/camera/CameraView.kt) кодирует каждую полезную нагрузку в base64 как
   JPEG data URL. Наложение панели показывает выбранный поток, состояние «онлайн/офлайн»,
-  измеренную частоту кадров и размеры при наличии метаданных `FrameSourceWidth` и `FrameSourceHeight`.
+  измеренную частоту кадров и размеры при наличии метаданных `SourceFrameSourceWidth` и `SourceFrameSourceHeight`.
   После перехода потока в офлайн последнее изображение остаётся видимым.
 - [`CommonPanelStrings`](src/commonMain/kotlin/CommonPanelStrings.kt) и
   [`CameraStrings`](src/jsMain/kotlin/CameraStrings.kt) содержат английские/русские строковые ресурсы. Это

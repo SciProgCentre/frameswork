@@ -22,33 +22,44 @@ import space.kscience.frameswork.features.ui.panel.frames.ui.camera.CameraViewMo
 
 object Plugin : StartPlugin {
     override fun Module.setupDI(config: JsonObject) {
-        singleWithRandomQualifier {
-            SerializersModule {
-                polymorphic(Any::class, CameraViewConfig::class, CameraViewConfig.serializer())
-                polymorphic(ViewConfig::class, CameraViewConfig::class, CameraViewConfig.serializer())
-            }
-        }
-
         single { KtorFramesDataInfoFeature(client = get(), json = get(), scope = get()) }
         single<FramesDataInfoFeature>(StringQualifier("back_pressure")) { GetFramesBackPressurePanelCameraInfoFeature(original = get<KtorFramesDataInfoFeature>(), 30.milliseconds) }
         single { CacheFramesDataInfoFeature(fallback = get<FramesDataInfoFeature>(StringQualifier("back_pressure")), scope = get()) }
         single<FramesDataInfoFeature> { get<CacheFramesDataInfoFeature>() }
 
-        factory { CameraViewModel(it.get(), get()) }
-        single<CameraModel> {
-            val feature = get<FramesDataInfoFeature>()
-            object : CameraModel {
-                override suspend fun getAvailableProcessors(): Set<String> = feature.getAvailableProcessors()
-                override suspend fun getAvailableCameras(processorName: String): Set<FramesSourceId>? = feature.getAvailableFramesSources(processorName)
-
-                override fun getCameraFrames(processorName: String, id: FramesSourceId): Flow<ByteArrayFrameData> {
-                    return feature.getFramesFlow(processorName, id)
-                }
-            }
-        }
     }
 
     override suspend fun startPlugin(koin: Koin) {
         super.startPlugin(koin)
+    }
+}
+
+/**
+ * Registers the common MVVM dependencies required by camera views.
+ *
+ * The module contributes polymorphic serializers for [CameraViewConfig] under both [Any] and
+ * [ViewConfig], a [CameraViewModel] factory, and a singleton [CameraModel] backed by
+ * [FramesDataInfoFeature]. The registered model delegates processor discovery, camera-source
+ * discovery, and frame-stream retrieval to the feature.
+ */
+fun Module.includeBaseCameraCommonMVVMParts() {
+    singleWithRandomQualifier {
+        SerializersModule {
+            polymorphic(Any::class, CameraViewConfig::class, CameraViewConfig.serializer())
+            polymorphic(ViewConfig::class, CameraViewConfig::class, CameraViewConfig.serializer())
+        }
+    }
+
+    factory { CameraViewModel(it.get(), get()) }
+    single<CameraModel> {
+        val feature = get<FramesDataInfoFeature>()
+        object : CameraModel {
+            override suspend fun getAvailableProcessors(): Set<String> = feature.getAvailableProcessors()
+            override suspend fun getAvailableCameras(processorName: String): Set<FramesSourceId>? = feature.getAvailableFramesSources(processorName)
+
+            override fun getCameraFrames(processorName: String, id: FramesSourceId): Flow<ByteArrayFrameData> {
+                return feature.getFramesFlow(processorName, id)
+            }
+        }
     }
 }

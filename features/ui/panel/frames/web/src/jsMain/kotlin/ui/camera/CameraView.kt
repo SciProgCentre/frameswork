@@ -7,8 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import dev.inmo.micro_utils.colors.common.HEXAColor
 import dev.inmo.micro_utils.colors.dimgray
-import dev.inmo.micro_utils.common.compose.tagClasses
-import dev.inmo.micro_utils.common.fixed
 import dev.inmo.micro_utils.coroutines.MutableRedeliverStateFlow
 import dev.inmo.micro_utils.coroutines.compose.StyleSheetsAggregator
 import dev.inmo.micro_utils.meta.MetaContainer
@@ -16,8 +14,6 @@ import dev.inmo.micro_utils.strings.translation
 import dev.inmo.navigation.core.NavigationChain
 import dev.inmo.navigation.mvvm.compose.ComposeView
 import korlibs.time.DateTime
-import korlibs.time.milliseconds
-import korlibs.time.millisecondsLong
 import korlibs.time.seconds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,9 +38,7 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.right
 import org.jetbrains.compose.web.css.top
 import org.jetbrains.compose.web.css.width
-import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Img
-import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 import org.koin.core.parameter.parametersOf
 import space.kscience.frameswork.features.common.web.models.ViewConfig
@@ -52,8 +46,8 @@ import org.koin.core.component.inject
 import space.kscience.frameswork.features.common.web.ui.FlotViewDashboardVideoSurface
 import space.kscience.frameswork.features.common.web.ui.FlotViewTone
 import space.kscience.frameswork.features.common.web.utils.cssRGBA
-import space.kscience.frameswork.features.frames.common.models.FrameSourceHeight
-import space.kscience.frameswork.features.frames.common.models.FrameSourceWidth
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceHeight
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceWidth
 import space.kscience.frameswork.features.ui.panel.frames.CameraStrings
 import kotlin.io.encoding.Base64
 import kotlin.math.roundToInt
@@ -131,8 +125,8 @@ class CameraView(
                     latestFrameDateTime = now
                     val framesPerSecond = 1.seconds / timeDiff
 
-                    val width = it.meta.get(FrameSourceWidth)
-                    val height = it.meta.get(FrameSourceHeight)
+                    val width = it.meta.get(SourceFrameSourceWidth)
+                    val height = it.meta.get(SourceFrameSourceHeight)
                     val widthHeightPrefix = if (width != null && height != null) {
                         "$width×$height"
                     } else {

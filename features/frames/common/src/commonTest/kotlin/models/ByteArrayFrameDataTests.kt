@@ -25,16 +25,16 @@ class ByteArrayFrameDataTests {
         val original = ByteArrayFrameData(payload, MetaContainerFixtures.withDimensions(320, 240))
 
         val copy = original.copyWithModifiedMeta {
-            put(FrameSourceWidth, 640)
-            put(FrameSourceHeight, 480)
+            put(SourceFrameSourceWidth, 640)
+            put(SourceFrameSourceHeight, 480)
         } as ByteArrayFrameData
 
         assertNotSame(original, copy)
         assertSame(payload, copy.bytes)
-        assertEquals(320, original.meta[FrameSourceWidth])
-        assertEquals(240, original.meta[FrameSourceHeight])
-        assertEquals(640, copy.meta[FrameSourceWidth])
-        assertEquals(480, copy.meta[FrameSourceHeight])
+        assertEquals(320, original.meta[SourceFrameSourceWidth])
+        assertEquals(240, original.meta[SourceFrameSourceHeight])
+        assertEquals(640, copy.meta[SourceFrameSourceWidth])
+        assertEquals(480, copy.meta[SourceFrameSourceHeight])
     }
 }
 
@@ -42,7 +42,7 @@ class ByteArrayFrameDataTests {
 internal object MetaContainerFixtures {
     /** Builds metadata containing the supplied frame [width] and [height]. */
     fun withDimensions(width: Int, height: Int) = buildMetaContainer {
-        put(FrameSourceWidth, width)
-        put(FrameSourceHeight, height)
+        put(SourceFrameSourceWidth, width)
+        put(SourceFrameSourceHeight, height)
     }
 }

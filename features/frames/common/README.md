@@ -29,7 +29,7 @@ commonMain.dependencies {
   [`OneConnectionFramesSource`](src/commonMain/kotlin/models/OneConnectionFramesSource.kt) shares one
   selected upstream source among its subscribers and switches when the selected source changes.
 - [`FramesSourceId`](src/commonMain/kotlin/models/FramesSourceId.kt) is the serializable source ID.
-- [`FramesSourceIdMeta`, `FrameSourceWidth`, `FrameSourceHeight`, `FrameReceiveTimestamp`, and
+- [`FramesSourceIdMeta`, `SourceFrameSourceWidth`, `SourceFrameSourceHeight`, `FrameReceiveTimestamp`, and
   `FrameSourceTimestampMicroseconds`](src/commonMain/kotlin/models/FrameMeta.kt) are serializable
   metadata keys for source identity, dimensions, receive time, and the source timestamp.
 - [`FrameSourceConnectorConfig`](src/commonMain/kotlin/models/FrameSourceConnectorConfig.kt) recreates

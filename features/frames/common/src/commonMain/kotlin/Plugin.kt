@@ -9,9 +9,11 @@ import kotlinx.serialization.modules.SerializersModule
 import org.koin.core.module.Module
 import space.kscience.frameswork.features.frames.common.models.FrameReceiveTimestamp
 import space.kscience.frameswork.features.frames.common.models.FrameSourceHeight
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceHeight
 import space.kscience.frameswork.features.frames.common.models.FramesSourceIdMeta
 import space.kscience.frameswork.features.frames.common.models.FrameSourceTimestampMicroseconds
 import space.kscience.frameswork.features.frames.common.models.FrameSourceWidth
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceWidth
 import space.kscience.frameswork.features.frames.common.models.FramesSourceId
 import space.kscience.frameswork.features.frames.common.services.DefaultFramesCollector
 import space.kscience.frameswork.features.frames.common.services.FramesCollector
@@ -43,8 +45,12 @@ object Plugin : StartPlugin {
 
                 polymorphic(Any::class, FramesSourceIdMeta::class, FramesSourceIdMeta.serializer())
                 polymorphic(MetaContainer.Key::class, FramesSourceIdMeta::class, FramesSourceIdMeta.serializer())
+                polymorphic(Any::class, SourceFrameSourceWidth::class, SourceFrameSourceWidth.serializer())
+                polymorphic(MetaContainer.Key::class, SourceFrameSourceWidth::class, SourceFrameSourceWidth.serializer())
                 polymorphic(Any::class, FrameSourceWidth::class, FrameSourceWidth.serializer())
                 polymorphic(MetaContainer.Key::class, FrameSourceWidth::class, FrameSourceWidth.serializer())
+                polymorphic(Any::class, SourceFrameSourceHeight::class, SourceFrameSourceHeight.serializer())
+                polymorphic(MetaContainer.Key::class, SourceFrameSourceHeight::class, SourceFrameSourceHeight.serializer())
                 polymorphic(Any::class, FrameSourceHeight::class, FrameSourceHeight.serializer())
                 polymorphic(MetaContainer.Key::class, FrameSourceHeight::class, FrameSourceHeight.serializer())
                 polymorphic(Any::class, FrameReceiveTimestamp::class, FrameReceiveTimestamp.serializer())

@@ -3,8 +3,8 @@ package space.kscience.frameswork.features.frames.common.models.javacv
 import dev.inmo.micro_utils.meta.buildMetaContainer
 import kotlinx.coroutines.test.runTest
 import org.bytedeco.javacv.Frame
-import space.kscience.frameswork.features.frames.common.models.FrameSourceHeight
-import space.kscience.frameswork.features.frames.common.models.FrameSourceWidth
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceHeight
+import space.kscience.frameswork.features.frames.common.models.SourceFrameSourceWidth
 import java.nio.ByteBuffer
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,21 +32,21 @@ class JavaCVFrameDataTests {
         val original = JavaCVFrameData(javaCvFrame, dimensions(320, 240))
 
         val copy = original.copyWithModifiedMeta {
-            put(FrameSourceWidth, 640)
-            put(FrameSourceHeight, 480)
+            put(SourceFrameSourceWidth, 640)
+            put(SourceFrameSourceHeight, 480)
         } as JavaCVFrameData
 
         assertNotSame(original, copy)
         assertSame(javaCvFrame, copy.frame)
-        assertEquals(320, original.meta[FrameSourceWidth])
-        assertEquals(240, original.meta[FrameSourceHeight])
-        assertEquals(640, copy.meta[FrameSourceWidth])
-        assertEquals(480, copy.meta[FrameSourceHeight])
+        assertEquals(320, original.meta[SourceFrameSourceWidth])
+        assertEquals(240, original.meta[SourceFrameSourceHeight])
+        assertEquals(640, copy.meta[SourceFrameSourceWidth])
+        assertEquals(480, copy.meta[SourceFrameSourceHeight])
     }
 
     /** Builds the dimension metadata used by test frames. */
     private fun dimensions(width: Int, height: Int) = buildMetaContainer {
-        put(FrameSourceWidth, width)
-        put(FrameSourceHeight, height)
+        put(SourceFrameSourceWidth, width)
+        put(SourceFrameSourceHeight, height)
     }
 }

@@ -2,7 +2,10 @@ package space.kscience.frameswork.features.processor.server.processor_middleware
 
 import com.sksamuel.scrimage.ImmutableImage
 import kotlinx.serialization.Serializable
+import space.kscience.frameswork.features.common.common.utils.modified
 import space.kscience.frameswork.features.frames.common.models.FrameData
+import space.kscience.frameswork.features.frames.common.models.FrameSourceHeight
+import space.kscience.frameswork.features.frames.common.models.FrameSourceWidth
 import space.kscience.frameswork.features.frames.common.models.javacv.BufferedImageFrameData
 import space.kscience.frameswork.features.processor.common.services.FramesProcessorMiddleware
 import java.awt.image.BufferedImage
@@ -89,6 +92,12 @@ class FrameCroppingMiddleware(
 
         if (outputBufferedImages == null) error("Unable to crop image for parameters $cropParameter")
 
-        return BufferedImageFrameData(outputBufferedImages, frame.meta)
+        return BufferedImageFrameData(
+            outputBufferedImages,
+            frame.meta.modified {
+                put(FrameSourceWidth, cropParameter.width)
+                put(FrameSourceHeight, cropParameter.height)
+            }
+        )
     }
 }
