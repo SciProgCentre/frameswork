@@ -86,8 +86,8 @@ The built-in registrations are exactly:
 | Registered type | Target | Qualifier | Exact retrieval | Value |
 | --- | --- | --- | --- | --- |
 | `SerializersModule` | JVM and JS | generated random qualifier | `koin.getAllDistinct<SerializersModule>()` | Polymorphic serializer contribution for `FramesProcessorMiddleware.Factory.Simple` under both `Any` and `FramesProcessorMiddleware.Factory` |
-| `FramesProcessorMiddleware` | JVM only | generated random qualifier | `koin.getAllDistinct<FramesProcessorMiddleware>()` | Singleton `BufferedImageSaverMiddleware("./local/")` |
-| `FramesProcessorMiddleware.Factory` | JVM only | generated random qualifier | `koin.getAllDistinct<FramesProcessorMiddleware.Factory>()` | Singleton saver factory with ID `images_saver` and folder `./local/` |
+| `FramesProcessorMiddleware` | JVM only | generated random qualifier | `koin.getAllDistinct<FramesProcessorMiddleware>()` | Singleton `BufferedImageSaverMiddleware` using `images_saver.saveFolder` (default `./local/`) |
+| `FramesProcessorMiddleware.Factory` | JVM only | generated random qualifier | `koin.getAllDistinct<FramesProcessorMiddleware.Factory>()` | Singleton saver factory with ID `images_saver`, using `images_saver.saveFolder` (default `./local/`) |
 
 `singleWithRandomQualifier` does not expose a stable qualifier name. Import
 `dev.inmo.micro_utils.koin.getAllDistinct` and use collection lookup for these contributions; an
@@ -127,6 +127,23 @@ This custom definition requires the application to provide unqualified `FramesCo
 collection is empty unless the application or another feature registers some.
 
 ## JVM image saver
+
+The JVM plugin reads an optional top-level `images_saver` object from the root configuration:
+
+```json
+{
+  "images_saver": {
+    "saveFolder": "./local/"
+  }
+}
+```
+
+When this object is present, `saveFolder` is a required string and the application must provide an
+unqualified `Json` binding to decode it. The configured directory is used by both the middleware
+singleton and the factory. When the object is omitted, both use `./local/`. Relative paths are
+resolved from the process working directory; absolute paths are also supported. This setting does
+not add the saver to a processor's pipeline: include `"images_saver"` in that processor's
+`middlewares` list to save its frames.
 
 [`BufferedImageSaverMiddleware`](src/jvmMain/kotlin/services/middlewares/BufferedImageSaverMiddleware.kt)
 creates its destination directory when constructed. For each `BufferedImageFrameData`, it writes a

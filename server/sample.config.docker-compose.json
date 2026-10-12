@@ -33,6 +33,9 @@
       }
     }
   },
+  "images_saver": {
+    "saveFolder": "/images/"
+  },
   "processors": {
     "main": {
       "middlewares": [

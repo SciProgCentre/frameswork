@@ -89,8 +89,8 @@ val processor = FramesProcessorService(
 | Зарегистрированный тип | Цель | Qualifier | Точное получение | Значение |
 | --- | --- | --- | --- | --- |
 | `SerializersModule` | JVM и JS | сгенерированный случайный qualifier | `koin.getAllDistinct<SerializersModule>()` | Добавление полиморфного сериализатора `FramesProcessorMiddleware.Factory.Simple` одновременно для `Any` и `FramesProcessorMiddleware.Factory` |
-| `FramesProcessorMiddleware` | только JVM | сгенерированный случайный qualifier | `koin.getAllDistinct<FramesProcessorMiddleware>()` | Singleton `BufferedImageSaverMiddleware("./local/")` |
-| `FramesProcessorMiddleware.Factory` | только JVM | сгенерированный случайный qualifier | `koin.getAllDistinct<FramesProcessorMiddleware.Factory>()` | Singleton фабрики сохранения с ID `images_saver` и каталогом `./local/` |
+| `FramesProcessorMiddleware` | только JVM | сгенерированный случайный qualifier | `koin.getAllDistinct<FramesProcessorMiddleware>()` | Singleton `BufferedImageSaverMiddleware` с каталогом из `images_saver.saveFolder` (по умолчанию `./local/`) |
+| `FramesProcessorMiddleware.Factory` | только JVM | сгенерированный случайный qualifier | `koin.getAllDistinct<FramesProcessorMiddleware.Factory>()` | Singleton фабрики сохранения с ID `images_saver` и каталогом из `images_saver.saveFolder` (по умолчанию `./local/`) |
 
 `singleWithRandomQualifier` не предоставляет стабильного имени qualifier-а. Импортируйте
 `dev.inmo.micro_utils.koin.getAllDistinct` и используйте получение коллекции этих добавлений;
@@ -130,6 +130,23 @@ val processor = koin.get<FramesProcessor>()
 зарегистрирует.
 
 ## Сохранение изображений на JVM
+
+JVM-плагин читает необязательный объект верхнего уровня `images_saver` из корневой конфигурации:
+
+```json
+{
+  "images_saver": {
+    "saveFolder": "./local/"
+  }
+}
+```
+
+Если объект присутствует, поле `saveFolder` обязательно и должно быть строкой, а приложение должно
+предоставить `Json` без qualifier-а для декодирования. Указанный каталог используют и singleton
+middleware, и фабрика. Если объект отсутствует, оба используют `./local/`. Относительные пути
+разрешаются от рабочего каталога процесса; абсолютные пути также поддерживаются. Эта настройка
+не добавляет сохранение в цепочку процессора: для сохранения его кадров включите `"images_saver"`
+в список `middlewares` соответствующего процессора.
 
 [`BufferedImageSaverMiddleware`](src/jvmMain/kotlin/services/middlewares/BufferedImageSaverMiddleware.kt)
 создаёт каталог назначения при конструировании. Для каждого `BufferedImageFrameData` он записывает

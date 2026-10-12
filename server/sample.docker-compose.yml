@@ -8,6 +8,7 @@ services:
       - "./config.json:/config.json:ro"
       - "./db/:/db/"
       - "./file.onnx:/file.onnx:ro"
+      - "./images/:/images/"
     ports:
       - "8196:8196"
   frameswork_postgres:
