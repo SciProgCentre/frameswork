@@ -28,6 +28,9 @@
       }
     }
   },
+  "images_saver": {
+    "saveFolder": "./local/"
+  },
   "processors": {
     "main": {
       "middlewares": [

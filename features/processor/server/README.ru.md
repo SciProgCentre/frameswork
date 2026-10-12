@@ -55,9 +55,12 @@
       }
     }
   },
+  "images_saver": {
+    "saveFolder": "./local/"
+  },
   "processors": {
     "preview": {
-      "middlewares": ["crop_preview"],
+      "middlewares": ["crop_preview", "images_saver"],
       "parallelProcessing": 8,
       "processingThrottlingMillis": 30,
       "rejectOldParallelHandling": false
@@ -65,6 +68,12 @@
   }
 }
 ```
+
+Необязательная настройка верхнего уровня `images_saver.saveFolder` задаёт каталог для
+делегированного JVM-middleware сохранения изображений и его фабрики. Если объект `images_saver`
+присутствует, строковое поле `saveFolder` обязательно; иначе используется `./local/`. Относительные
+пути отсчитываются от рабочего каталога процесса. В примере кадры сохраняются после обрезки,
+поскольку `images_saver` стоит после `crop_preview` в списке middleware процессора.
 
 Поле `middlewares` обязательно для каждого процессора, а `parallelProcessing` должно быть
 положительным. Остальные поля процессора имеют значения по умолчанию, показанные в примере. Значение

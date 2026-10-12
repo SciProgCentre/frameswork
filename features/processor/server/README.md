@@ -54,9 +54,12 @@ entry name prefixed with `crop_`:
       }
     }
   },
+  "images_saver": {
+    "saveFolder": "./local/"
+  },
   "processors": {
     "preview": {
-      "middlewares": ["crop_preview"],
+      "middlewares": ["crop_preview", "images_saver"],
       "parallelProcessing": 8,
       "processingThrottlingMillis": 30,
       "rejectOldParallelHandling": false
@@ -64,6 +67,12 @@ entry name prefixed with `crop_`:
   }
 }
 ```
+
+The optional top-level `images_saver.saveFolder` setting configures the destination for the
+delegated JVM image saver and its factory. If `images_saver` is present, `saveFolder` is a required
+string; otherwise the directory defaults to `./local/`. Relative paths use the process working
+directory. The example saves frames after cropping because `images_saver` follows `crop_preview` in
+the processor's middleware list.
 
 `middlewares` is required for each processor, and `parallelProcessing` must be positive. The other
 processor fields have the defaults shown in the example. Setting `processingThrottlingMillis` to

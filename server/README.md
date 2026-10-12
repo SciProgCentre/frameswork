@@ -88,6 +88,12 @@ process starts in `server/`, as in [`sample.config.dev.json`](sample.config.dev.
 template [`sample.config.docker-compose.json`](sample.config.docker-compose.json) maps static files
 from `/static/`.
 
+Both sample configurations explicitly set the optional top-level `images_saver.saveFolder` to
+`./local/`, relative to the process working directory. Omitting `images_saver` preserves this default;
+when present, its `saveFolder` string is required. To save frames, add `"images_saver"` to the desired
+processor's `middlewares` list. See the [processor configuration](../features/processor/server/README.md)
+for an example.
+
 The two checked-in sample configurations are historical deployment templates, not minimal verified
 configurations: they reference `space.kscience.frameswork.features.markup.*` plugins, while no markup
 module is included by the current [`settings.gradle`](../settings.gradle), and their H2 database

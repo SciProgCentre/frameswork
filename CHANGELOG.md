@@ -1,8 +1,12 @@
 # FramesWork changelog
 
+## 0.0.4
+
+* Добавлена возможность конфигурировать миддлвар `BufferedImageSaverMiddlewareConfig` через опцию в файле конфига `images_saver.saveFolder`
+
 ## 0.0.3
 
-* Камера как базовая нода теперь не входит
+* Камера как базовая нода теперь не входит в DI
   * `Common`: 
     * Добавлено расширение `Module.includeBaseCameraCommonMVVMParts` для включения базовых MVVM-компонентов камеры в DI
   * `Js`:
